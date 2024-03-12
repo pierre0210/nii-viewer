@@ -3,10 +3,10 @@ FROM node:18-alpine as builder
 WORKDIR /app
 COPY public/ /app/public
 COPY src/ /app/src
-COPY package.json package-lock.json /app/
+COPY package.json yarn.lock /app/
 
-RUN npm install
-RUN npm run build
+RUN yarn install
+RUN yarn build
 
 FROM nginx:stable-alpine
 COPY --from=builder /app/build /usr/share/nginx/html
