@@ -29,7 +29,7 @@ def nii2arr(filename: str):
             "size": 2,
             "showscale": True,
             "cmax": int(np.max(val)),
-            "cmid": int(np.median(val)),
+            "cmid": round(np.mean(val)),
             "cmin": int(np.min(val)),
             "color": val.tolist(),
             "colorscale": "Greys"
