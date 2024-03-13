@@ -1,7 +1,14 @@
+import sys
 import os
 import time
 import uuid
-from flask import Flask, request, Response
+from flask import Flask, request, Response, jsonify
+import nii
+
+DEBUG = False
+if len(sys.argv) > 1:
+    if sys.argv[1].lower() == "debug":
+        DEBUG = True
 
 ALLOWED_EXTENSIONS = ("nii", "nii.gz")
 app = Flask(__name__)
@@ -24,9 +31,12 @@ def upload():
         return Response("no file.", status = 400, mimetype = "text/plain")
     if not allowed_extensions(file.filename):
         return Response("not allowed file extension.", status = 400, mimetype = "text/plain")
-    savename = str(uuid.uuid4()) + file.filename.rsplit(".", 1)[1]
-    file.save(os.path.join(app.config["UPLOAD_FOLDER"], savename))
-    return Response({ "filename": savename }, status = 200, mimetype = "application/json")
+    savename = f"{str(uuid.uuid4())}.{file.filename.rsplit('.', 1)[1]}"
+    savepath = os.path.join(app.config["UPLOAD_FOLDER"], savename)
+    file.save(savepath)
+    data = nii.nii2arr(savepath)
+    os.remove(savepath)
+    return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 3001, debug = True)
+    app.run(host = "0.0.0.0", port = 3001, debug = DEBUG)

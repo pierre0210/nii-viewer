@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import Upload from "./components/Upload";
 
 function App() {
   const [currentTime, setCurrentTime] = useState("");
@@ -12,7 +13,8 @@ function App() {
   }, []);
   return (
     <div className="App">
-      <p>Current Time: { currentTime }</p>
+      <p>Current Time: {currentTime}</p>
+      <Upload />
     </div>
   );
 }
