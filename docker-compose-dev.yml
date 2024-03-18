@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend-dev:
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./backend:/app/
+    ports:
+      - 3001:3001
+  frontend-dev:
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
+    volumes:
+      - ./frontend:/app/
+      - /app/node_modules
+    depends_on:
+      - backend-dev
+    ports:
+      - 3000:3000
