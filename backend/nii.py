@@ -32,7 +32,7 @@ def nii2arr(filename: str):
             "cmid": round(np.mean(val)),
             "cmin": int(np.min(val)),
             "color": val.tolist(),
-            "colorscale": "Greys"
+            "colorscale": "Picnic"
         },
     }
     return data
