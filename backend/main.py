@@ -3,7 +3,10 @@ import os
 import time
 import uuid
 from flask import Flask, request, Response, jsonify
+from dotenv import load_dotenv
 import nii
+
+load_dotenv()
 
 DEBUG = False
 if len(sys.argv) > 1:
@@ -12,7 +15,7 @@ if len(sys.argv) > 1:
 
 ALLOWED_EXTENSIONS = ("nii", "nii.gz")
 app = Flask(__name__)
-app.config["UPLOAD_FOLDER"] = "/tmp"
+app.config["UPLOAD_PATH"] = os.getenv("UPLOAD_PATH")
 app.config['MAX_CONTENT_LENGTH'] = 24 * 1024 * 1024
 
 def allowed_extensions(filename: str):
@@ -32,7 +35,7 @@ def upload():
     if not allowed_extensions(file.filename):
         return Response("not allowed file extension.", status = 400, mimetype = "text/plain")
     savename = f"{str(uuid.uuid4())}.{file.filename.rsplit('.', 1)[1]}"
-    savepath = os.path.join(app.config["UPLOAD_FOLDER"], savename)
+    savepath = os.path.join(app.config["UPLOAD_PATH"], savename)
     file.save(savepath)
     data = nii.nii2arr(savepath)
     os.remove(savepath)
