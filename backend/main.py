@@ -4,9 +4,12 @@ import time
 import uuid
 from flask import Flask, request, Response, jsonify
 from dotenv import load_dotenv
+
 import nii
+from cache import Cache
 
 load_dotenv()
+cache = Cache()
 
 DEBUG = False
 if len(sys.argv) > 1:
@@ -38,7 +41,8 @@ def upload():
     savepath = os.path.join(app.config["UPLOAD_PATH"], savename)
     file.save(savepath)
     data = nii.nii2arr(savepath)
-    os.remove(savepath)
+    print(savename, file=sys.stdout, flush=True)
+    cache.set_file(savename)
     return jsonify(data)
 
 if __name__ == "__main__":
