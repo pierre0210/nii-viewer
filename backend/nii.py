@@ -15,6 +15,8 @@ def get_surface(arr: np.ndarray) -> np.ndarray:
 
 def nii2arr(filename: str):
     nii_arr = np.array(nib.load(filename).dataobj)
+    if nii_arr.ndim != 3:
+        return None
     # pos = np.argwhere(nii_arr > 0)
     pos, val = get_surface(nii_arr)
     #val = nii_arr[pos]

@@ -31,19 +31,26 @@ def get_time():
 @app.route("/api/upload", methods = ["POST"])
 def upload():
     if "file" not in request.files:
-        return Response("no file part.", status = 400, mimetype = "text/plain")
+        return Response("no file part.", status=400, mimetype="text/plain")
     file = request.files["file"]
     if file.filename == "":
-        return Response("no file.", status = 400, mimetype = "text/plain")
+        return Response("no file.", status=400, mimetype="text/plain")
     if not allowed_extensions(file.filename):
-        return Response("not allowed file extension.", status = 400, mimetype = "text/plain")
+        return Response("not allowed file extension.", status=400, mimetype="text/plain")
+    
     savename = f"{str(uuid.uuid4())}.{file.filename.rsplit('.', 1)[1]}"
     savepath = os.path.join(app.config["UPLOAD_PATH"], savename)
     file.save(savepath)
+
     data = nii.nii2arr(savepath)
+    if not data:
+        os.remove(savepath)
+        return Response("wrong format.", status=400, mimetype="text/plain")
+
     print(savename, file=sys.stdout, flush=True)
     cache.set_file(savename)
+
     return jsonify(data)
 
 if __name__ == "__main__":
-    app.run(host = "0.0.0.0", port = 3001, debug = DEBUG)
+    app.run(host = "0.0.0.0", port=3001, debug=DEBUG)
