@@ -4,7 +4,7 @@ WORKDIR /app
 COPY public/ ./public
 COPY src/ ./src
 COPY index.html .
-COPY vite.config.js .
+COPY vite.config.mjs .
 COPY package.json yarn.lock ./
 
 RUN yarn install

@@ -17,22 +17,14 @@ def nii2arr(filename: str):
     nii_arr = np.array(nib.load(filename).dataobj)
     # pos = np.argwhere(nii_arr > 0)
     pos, val = get_surface(nii_arr)
-    print(pos.shape)
     #val = nii_arr[pos]
     data = {
-        "mode": "markers",
-        "type": "scatter3d",
         "x": pos.T[0].tolist(),
         "y": pos.T[1].tolist(),
         "z": pos.T[2].tolist(),
-        "marker": {
-            "size": 2,
-            "showscale": True,
-            "cmax": int(np.max(val)),
-            "cmid": round(np.mean(val)),
-            "cmin": int(np.min(val)),
-            "color": val.tolist(),
-            "colorscale": "Picnic"
-        },
+        "val": val.tolist(),
+        "min": int(np.min(val)),
+        "mid": round(np.mean(val)),
+        "max": int(np.max(val))
     }
     return data

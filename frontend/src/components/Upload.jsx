@@ -21,7 +21,22 @@ function Upload(props) {
     };
     axios.post("/api/upload", formData, config).then((res) => {
       console.log(res.data);
-      props.setData(res.data);
+      props.setData({
+        mode: "markers",
+        type: "scatter3d",
+        x: res.data["x"],
+        y: res.data["y"],
+        z: res.data["z"],
+        marker: {
+          size: 2,
+          showscale: true,
+          cmax: res.data["max"],
+          cmid: res.data["mid"],
+          cmin: res.data["min"],
+          color: res.data["val"],
+          colorscale: "Picnic"
+        }
+      });
     });
   }
 
