@@ -8,9 +8,9 @@ import redis
 load_dotenv()
 
 class CacheThread(threading.Thread):
-    def __init__(self):
+    def __init__(self, client):
         threading.Thread.__init__(self)
-        self.client = redis.Redis(os.getenv("REDIS_HOST"), 6379, password=os.getenv("REDIS_PASSWORD"), decode_responses=True)
+        self.client = client #redis.Redis(os.getenv("REDIS_HOST"), 6379, password=os.getenv("REDIS_PASSWORD"), decode_responses=True)
         self.pubsub = self.client.pubsub()
         self.pubsub.psubscribe("__keyevent@0__:expired")
     
@@ -29,7 +29,7 @@ class Cache:
         self.client.config_set("notify-keyspace-events", "KEA")
         self.expire_time = int(os.getenv("PRESERVE_TIME_MIN")) * 60 # sec
         
-        self.cache_thread = CacheThread()
+        self.cache_thread = CacheThread(self.client)
         self.cache_thread.start()
 
     def set_file(self, filename):
