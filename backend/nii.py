@@ -50,12 +50,9 @@ def get_slice(filename: str, side: str, slice: int):
         return err, None
     elif arr.shape[axis] <= slice or slice < 0:
         return "index out of range.", None
-    
-    index = [slice(None)] * 3
-    index[axis] = slice
 
     data = {
-        "z": arr[tuple(index)]
+        "z": np.take(arr, slice, axis).tolist()
     }
 
-    return data
+    return None, data

@@ -56,12 +56,12 @@ def upload():
 
     return jsonify(data)
 
-@app.route("/api/plane/<str:side>/<int:slice>")
+@app.route("/api/plane/<side>/<int:slice>")
 def get_plane(side, slice):
     if "filename" not in session:
         return Response("no file.", status=400, mimetype="text/plain")
     
-    err, data = nii.get_slice(session["filename"], side, slice)
+    err, data = nii.get_slice(os.path.join(app.config["UPLOAD_PATH"], session["filename"]), side, slice)
     if err:
         return Response(err, status=400, mimetype="text/plain")
     
