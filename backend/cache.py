@@ -35,6 +35,9 @@ class Cache:
     def set_file(self, filename):
         self.client.set(filename, "", self.expire_time)
 
+    def reset_file_expiry(self, filename):
+        self.client.expire(filename, self.expire_time)
+
     def check_file(self, filename) -> bool:
         res = self.client.exists(filename)
         return False if res == 0 else True

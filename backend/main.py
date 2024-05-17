@@ -2,7 +2,8 @@ import sys
 import os
 import time
 import uuid
-from flask import Flask, request, Response, jsonify
+from datetime import timedelta
+from flask import Flask, request, Response, jsonify, session
 from dotenv import load_dotenv
 
 import nii
@@ -18,6 +19,8 @@ if len(sys.argv) > 1:
 
 ALLOWED_EXTENSIONS = ("nii", "nii.gz")
 app = Flask(__name__)
+app.config["SECRET_KEY"] = os.urandom(64)
+# app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=int(os.getenv("PRESERVE_TIME_MIN")))
 app.config["UPLOAD_PATH"] = os.getenv("UPLOAD_PATH")
 app.config['MAX_CONTENT_LENGTH'] = 24 * 1024 * 1024
 
@@ -42,13 +45,27 @@ def upload():
     savepath = os.path.join(app.config["UPLOAD_PATH"], savename)
     file.save(savepath)
 
-    data = nii.nii2arr(savepath)
-    if not data:
+    err, data = nii.get_surface(savepath)
+    if err:
         os.remove(savepath)
-        return Response("wrong format.", status=400, mimetype="text/plain")
+        return Response(err, status=400, mimetype="text/plain")
 
     print(savename, file=sys.stdout, flush=True)
+    session["filename"] = savename
     cache.set_file(savename)
+
+    return jsonify(data)
+
+@app.route("/api/plane/<str:side>/<int:slice>")
+def get_plane(side, slice):
+    if "filename" not in session:
+        return Response("no file.", status=400, mimetype="text/plain")
+    
+    err, data = nii.get_slice(session["filename"], side, slice)
+    if err:
+        return Response(err, status=400, mimetype="text/plain")
+    
+    cache.reset_file_expiry(session["filename"])
 
     return jsonify(data)
 
