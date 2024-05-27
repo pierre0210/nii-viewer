@@ -18,7 +18,7 @@ function App() {
     <div className="App">
       <p>Current Time: {currentTime}</p>
       <Upload setData={setData} />
-      <div id="niiPlot">
+      <div id="niiPlot" className="p-1">
         { Object.keys(data).length !== 0 ? <Plot data={[data]} layout={ {width: 1024, height: 720} } /> : null }
       </div>
     </div>
