@@ -34,18 +34,22 @@ function App() {
   }, [shape]);
 
   useEffect(() => {
-    if (shape[0] > 0) {
-      axios
-        .get(`/api/plane/xy/${zSlice}`)
-        .then((res) => setXYSliceData(res.data.z));
-      axios
-        .get(`/api/plane/xz/${ySlice}`)
-        .then((res) => setXZSliceData(res.data.z));
-      axios
-        .get(`/api/plane/yz/${xSlice}`)
-        .then((res) => setYZSliceData(res.data.z));
-    }
-  }, [xSlice, ySlice, zSlice, shape]);
+    axios
+      .get(`/api/plane/xy/${zSlice}`)
+      .then((res) => setXYSliceData(res.data.z));
+  }, [zSlice]);
+
+  useEffect(() => {
+    axios
+      .get(`/api/plane/xz/${ySlice}`)
+      .then((res) => setXZSliceData(res.data.z));
+  }, [ySlice]);
+
+  useEffect(() => {
+    axios
+      .get(`/api/plane/yz/${xSlice}`)
+      .then((res) => setYZSliceData(res.data.z));
+  }, [xSlice])
 
   return (
     <div className="App">
@@ -66,7 +70,7 @@ function App() {
         <Upload setData={setData} setShape={setShape} />
       </div>
       <p className ="m-auto text-3xl font-bold p-6 text-center">Show in 3D Scatter</p>
-      <div id="niiPlot" className="ml-auto bg-white rounded-xl border-4 shadow-lg">
+      <div id="niiPlot" className="flex justify-center bg-white rounded-xl border-4 shadow-lg">
         { Object.keys(data).length !== 0 ? <Plot data={[data]} layout={ {width: 1024, height: 720} } /> : null }
       </div>
       
@@ -74,70 +78,72 @@ function App() {
       <div className="ml-auto bg-white rounded-xl border-4 shadow-lg">
         <div className="p-60">
           <p className ="text-center">Heat Map</p>
-          <div id="slicePlots" className="p-1">
-            {shape[0] > 0 && (
-              <div>
-                <div>
-                  <Slider
-                    label={`X: ${xSlice}`}
-                    min={0}
-                    max={shape[0] - 1}
-                    value={xSlice}
-                    onChange={(e) => setXSlice(Number(e.target.value))}
-                  />
-                </div>
-                <div>
-                  <Slider
-                    label={`Y: ${ySlice}`}
-                    min={0}
-                    max={shape[1] - 1}
-                    value={ySlice}
-                    onChange={(e) => setYSlice(Number(e.target.value))}
-                  />
-                </div>
-                <div>
-                  <Slider
-                    label={`Z: ${zSlice}`}
-                    min={0}
-                    max={shape[2] - 1}
-                    value={zSlice}
-                    onChange={(e) => setZSlice(Number(e.target.value))}
-                  />
-                </div>
-              </div>
-            )}
+          <div id="slicePlots" className="p-1 flex">
             <div className="sliceContainer">
               <h3>XY Slice</h3>
-              {
-                xySliceData.length > 0 ? (
-                  <Plot
-                    data={[{ z: xySliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512 }}
-                  />
-                ) : null
-              }
+              <div className="flex justify-center">
+                {
+                  Object.keys(data).length !== 0 ? (
+                    <div>
+                      <Slider
+                        label={`Z: ${zSlice}`}
+                        min={0}
+                        max={shape[2] - 1}
+                        value={zSlice}
+                        onChange={(e) => setZSlice(Number(e.target.value))}
+                      />
+                      <Plot
+                        data={[{ z: xySliceData, type: "heatmap" }]}
+                        layout={{ width: 512, height: 512 }}
+                      />
+                    </div>
+                  ) : null
+                }
+              </div>
             </div>
             <div className="sliceContainer">
               <h3>XZ Slice</h3>
-              {
-                xzSliceData.length > 0 ? (
-                  <Plot
-                    data={[{ z: xzSliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512 }}
-                  />
-                ) : null
-              }
+              <div className="flex justify-center">
+                {
+                  Object.keys(data).length !== 0 ? (
+                    <div className="block">
+                      <Slider
+                        label={`Y: ${ySlice}`}
+                        min={0}
+                        max={shape[1] - 1}
+                        value={ySlice}
+                        onChange={(e) => setYSlice(Number(e.target.value))}
+                      />
+                      <Plot
+                        data={[{ z: xzSliceData, type: "heatmap" }]}
+                        layout={{ width: 512, height: 512 }}
+                      />
+                    </div>
+                  ) : null
+                }
+              </div>
             </div>
             <div className="sliceContainer">
               <h3>YZ Slice</h3>
-              {
-                yzSliceData.length > 0 ? (
-                  <Plot
-                    data={[{ z: yzSliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512 }}
-                  />
-                ) : null
-              }
+              <div className="flex justify-center">
+                {
+                  Object.keys(data).length !== 0 ? (
+                    <div className="block">
+                      <Slider
+                        label={`X: ${xSlice}`}
+                        min={0}
+                        max={shape[0] - 1}
+                        value={xSlice}
+                        onChange={(e) => setXSlice(Number(e.target.value))}
+                      />
+                      <Plot
+                        data={[{ z: yzSliceData, type: "heatmap" }]}
+                        layout={{ width: 512, height: 512 }}
+                      />
+                    </div>
+                  ) : null
+                }
+              </div>
             </div>
           </div>
         </div>

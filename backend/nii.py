@@ -52,7 +52,7 @@ def get_slice(filename: str, side: str, slice: int):
         return "index out of range.", None
 
     data = {
-        "z": np.take(arr, slice, axis).tolist()
+        "z": np.take(arr, slice, axis).T.tolist()
     }
 
     return None, data
