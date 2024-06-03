@@ -45,7 +45,7 @@ function Upload(props) {
     <>
       <form onSubmit={handleSubmit}>
         <input id="file" name="file" type="file" accept=".nii,.nii.gz" onChange={handleChange} />
-        <button className="m-1 p-1 border border-black" type="submit">Upload</button>
+        <button type="submit" className = "bg-blue-900 text-white rounded-xl p-2 px-4">Upload</button>
       </form>
     </>
   );
