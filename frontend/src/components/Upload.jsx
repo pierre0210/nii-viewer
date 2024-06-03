@@ -37,6 +37,7 @@ function Upload(props) {
           colorscale: "Picnic"
         }
       });
+      props.setShape(res.data["shape"]);
     });
   }
 
@@ -47,7 +48,7 @@ function Upload(props) {
         <button className="m-1 p-1 border border-black" type="submit">Upload</button>
       </form>
     </>
-  )
+  );
 }
 
 export default Upload;
