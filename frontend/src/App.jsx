@@ -77,7 +77,7 @@ function App() {
         </div>
         
         <p className ="mx-auto text-3xl font-bold p-6 text-center">Show in Slides</p>
-        <div className="ml-auto bg-white rounded-xl border-4 shadow-lg">
+        <div className="mx-auto w-fit h-fit bg-white rounded-xl border-4 shadow-lg">
           <div className="p-60">
             <p className ="text-center">Heat Map</p>
             <div id="slicePlots" className="p-1 flex">
