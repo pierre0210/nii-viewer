@@ -1,8 +1,11 @@
+import os
 from scipy.ndimage.morphology import binary_dilation
 import nibabel as nib
 import numpy as np
 
 def nii2arr(filename: str):
+    if not os.path.isfile(filename):
+        return "file not found", None
     nii_arr = np.array(nib.load(filename).dataobj)
     if nii_arr.ndim != 3:
         return "wrong dimension", None
