@@ -69,5 +69,16 @@ def get_plane(side, slice):
 
     return jsonify(data)
 
+@app.route("/api/hist")
+def get_hist():
+    if "filename" not in session:
+        return Response("no file.", status=400, mimetype="text/plain")
+    
+    err, data = nii.get_hist(os.path.join(app.config["UPLOAD_PATH"], session["filename"]))
+    if err:
+        return Response(err, status=400, mimetype="text/plain")
+    
+    return jsonify(data)
+
 if __name__ == "__main__":
     app.run(host = "0.0.0.0", port=3001, debug=DEBUG)

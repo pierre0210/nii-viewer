@@ -59,3 +59,17 @@ def get_slice(filename: str, side: str, slice: int):
     }
 
     return None, data
+
+def get_hist(filename: str):
+    err, arr = nii2arr(filename)
+    if err:
+        return err, None
+    
+    hist, edges = np.histogram(arr, np.max(arr))
+
+    data = {
+        "hist": hist.tolist(),
+        "edges": edges.tolist()
+    }
+
+    return None, data
