@@ -9,7 +9,9 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
         <div className="p-10">
           <div id="slicePlots" className="p-1 flex">
             <div className="sliceContainer">
-              <h3>XY Slice</h3>
+              <div className="flex justify-center">
+                <p className="font-bold text-lg my-3">XY Slice</p>
+              </div>
               <div className="flex justify-center">
                 <div>
                   <Slider
@@ -27,7 +29,9 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
               </div>
             </div>
             <div className="sliceContainer">
-              <h3>XZ Slice</h3>
+              <div className="flex justify-center">
+                <p className="font-bold text-lg my-3">XZ Slice</p>
+              </div>
               <div className="flex justify-center">
                 <div className="block">
                   <Slider
@@ -45,7 +49,9 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
               </div>
             </div>
             <div className="sliceContainer">
-              <h3>YZ Slice</h3>
+              <div className="flex justify-center">
+                <p className="font-bold text-lg my-3">YZ Slice</p>
+              </div>
               <div className="flex justify-center">
                 <div className="block">
                   <Slider

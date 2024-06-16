@@ -34,7 +34,7 @@ function Upload(props) {
           cmid: res.data["mid"],
           cmin: res.data["min"],
           color: res.data["val"],
-          colorscale: "Picnic"
+          colorscale: "Viridis"
         }
       });
       props.setShape(res.data["shape"]);

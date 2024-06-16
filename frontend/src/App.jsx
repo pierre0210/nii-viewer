@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
-import Plot from "react-plotly.js";
 import "./App.css";
 import Upload from "./components/Upload";
 import SurfacePlot from "./components/SurfacePlot";
 import SlicePlot from "./components/SlicePlot";
-import axios from "axios";
 import Histogram from "./components/Histogram";
+import axios from "axios";
 
 function App() {
   const [data, setData] = useState({});
@@ -34,7 +33,6 @@ function App() {
       axios
         .get("/api/hist")
         .then((res) => {
-          console.log(res.data);
           setHist(res.data.hist);
           setEdges(res.data.edges);
         })
@@ -76,11 +74,9 @@ function App() {
           </div>
         </div>
       </div>
-      {
-        Object.keys(data).length !== 0 ? (
-        <>
+      <div className={`${Object.keys(data).length !== 0 ? "visible" : "hidden"}`}>
         <SurfacePlot data={data} />
-        <SlicePlot 
+        <SlicePlot
           xSlice={xSlice} setXSlice={setXSlice}
           ySlice={ySlice} setYSlice={setYSlice}
           zSlice={zSlice} setZSlice={setZSlice}
@@ -90,9 +86,7 @@ function App() {
           shape={shape}
         />
         <Histogram hist={hist} edges={edges} />
-        </>) : null
-      }
-      
+      </div>
     </div>
   );
 }
