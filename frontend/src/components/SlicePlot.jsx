@@ -3,11 +3,11 @@ import Plot from "react-plotly.js"
 
 function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xySliceData, yzSliceData, xzSliceData, shape }) {
   return (
-    <>
-      <p className ="mx-auto text-3xl font-bold p-6 pt-14 text-center">Show in Slices</p>
-      <div className="mx-auto w-fit h-fit bg-white rounded-xl border-4 shadow-lg">
-        <div className="p-10">
-          <div id="slicePlots" className="p-1 flex">
+    <div className="mx-auto">
+      <p className ="text-3xl font-bold pt-14 pb-5 text-center">Slice View</p>
+      <div className="mx-auto w-fit h-fit px-16 pt-5 bg-white rounded-xl border-4 shadow-lg">
+        <div>
+          <div id="slicePlots" className="p-1 grid grid-cols-2">
             <div className="sliceContainer">
               <div className="flex justify-center">
                 <p className="font-bold text-lg my-3">XY Slice</p>
@@ -23,7 +23,7 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
                   />
                   <Plot
                     data={[{ z: xySliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
+                    layout={{ width: 480, height: 480, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
                   />
                 </div>
               </div>
@@ -43,12 +43,12 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
                   />
                   <Plot
                     data={[{ z: xzSliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
+                    layout={{ width: 480, height: 480, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
                   />
                 </div>
               </div>
             </div>
-            <div className="sliceContainer">
+            <div className="sliceContainer col-span-2">
               <div className="flex justify-center">
                 <p className="font-bold text-lg my-3">YZ Slice</p>
               </div>
@@ -63,7 +63,7 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
                   />
                   <Plot
                     data={[{ z: yzSliceData, type: "heatmap" }]}
-                    layout={{ width: 512, height: 512, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
+                    layout={{ width: 480, height: 480, xaxis: { scaleanchor: "y", scaleratio: 1 } }}
                   />
                 </div>
               </div>
@@ -71,7 +71,7 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }
 

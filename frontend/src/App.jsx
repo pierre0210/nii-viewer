@@ -74,17 +74,19 @@ function App() {
           </div>
         </div>
       </div>
-      <div className={`${Object.keys(data).length !== 0 ? "visible" : "hidden"}`}>
+      <div className={`grid grid-cols-2 ${Object.keys(data).length !== 0 ? "visible" : "hidden"}`}>
         <SurfacePlot data={data} />
-        <SlicePlot
-          xSlice={xSlice} setXSlice={setXSlice}
-          ySlice={ySlice} setYSlice={setYSlice}
-          zSlice={zSlice} setZSlice={setZSlice}
-          xySliceData={xySliceData}
-          yzSliceData={yzSliceData}
-          xzSliceData={xzSliceData}
-          shape={shape}
-        />
+        <div className="row-span-2">
+          <SlicePlot
+            xSlice={xSlice} setXSlice={setXSlice}
+            ySlice={ySlice} setYSlice={setYSlice}
+            zSlice={zSlice} setZSlice={setZSlice}
+            xySliceData={xySliceData}
+            yzSliceData={yzSliceData}
+            xzSliceData={xzSliceData}
+            shape={shape}
+          />
+        </div>
         <Histogram hist={hist} edges={edges} />
       </div>
     </div>
