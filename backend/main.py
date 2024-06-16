@@ -56,7 +56,7 @@ def upload():
 
     return jsonify(data)
 
-@app.route("/api/plane/<side>/<int:slice>")
+@app.route("/api/plane/<side>/<int:slice>", methods = ["GET"])
 def get_plane(side, slice):
     if "filename" not in session:
         return Response("no file.", status=400, mimetype="text/plain")
@@ -69,7 +69,7 @@ def get_plane(side, slice):
 
     return jsonify(data)
 
-@app.route("/api/hist")
+@app.route("/api/hist", methods = ["GET"])
 def get_hist():
     if "filename" not in session:
         return Response("no file.", status=400, mimetype="text/plain")
