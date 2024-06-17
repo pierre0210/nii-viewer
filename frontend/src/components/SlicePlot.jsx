@@ -5,7 +5,7 @@ function SlicePlot({ xSlice, setXSlice, ySlice, setYSlice, zSlice, setZSlice, xy
   return (
     <div className="mx-auto">
       <p className ="text-3xl font-bold pt-14 pb-5 text-center">Slice View</p>
-      <div className="mx-auto w-fit h-fit px-16 pt-5 bg-white rounded-xl border-4 shadow-lg">
+      <div className="mx-auto w-fit h-fit px-16 pt-5 bg-white rounded-xl shadow-lg">
         <div>
           <div id="slicePlots" className="p-1 grid grid-cols-2">
             <div className="sliceContainer">

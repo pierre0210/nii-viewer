@@ -64,7 +64,7 @@ function App() {
   }, [xSlice]);
 
   return (
-    <div className="App bg-gray-100">
+    <div className="App bg-gray-200">
       <div className={`flex ${Object.keys(data).length !== 0 ? "" : "h-screen"}`}>
         <div className={`p-6 w-fit h-fit ${Object.keys(data).length !== 0 ? "mx-auto mt-10" : "m-auto"} bg-white rounded-xl shadow-lg flex items-center space-x-4 border-2`}>
           <img className="object-cover h-20 w-20 rounded-full" src="/icon.jpg"></img>

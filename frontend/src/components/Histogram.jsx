@@ -5,7 +5,7 @@ function Histogram({ hist, edges }) {
   return (
     <div className="pb-14">
       <p className ="m-auto text-3xl font-bold p-6 text-center">Histogram</p>
-      <div className="mx-auto w-fit h-fit bg-white rounded-xl border-4 shadow-lg">
+      <div className="mx-auto w-fit h-fit bg-white rounded-xl shadow-lg">
         <div className="px-3">
           <Plot
             data={[{ x: edges.slice(1, -1), y: hist.slice(1), type: "scatter", mode: "lines" }]}
